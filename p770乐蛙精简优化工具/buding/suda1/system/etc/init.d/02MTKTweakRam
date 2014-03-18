@@ -1,0 +1,231 @@
+#!/system/bin/sh
+
+############################
+# MtkTweak_V14 For MTK6589T#
+#       作者:cx9208        #
+#   吾就爱智能荣誉出品     #
+#         -Ram模式-        #
+############################
+
+LOG_FILE=/data/MtkTweak.log;
+Mode=`cat /system/MTRamMode`;
+
+if [ "$Mode" = "512B" ]; then
+
+echo "" | tee -a $LOG_FILE
+echo "--> 内存模式：512MB内存推荐配置" | tee -a $LOG_FILE
+echo "" | tee -a $LOG_FILE
+
+#VM调整
+sysctl -w vm.dirty_background_ratio=10;
+sysctl -w vm.dirty_ratio=20;
+sysctl -w vm.dirty_expire_centisecs=1000;
+sysctl -w vm.dirty_writeback_centisecs=2000;
+sysctl -w vm.min_free_kbytes=4096;
+sysctl -w vm.vfs_cache_pressure=70;
+sysctl -w vm.swappiness=40;
+sysctl -w vm.page-cluster=2;
+sysctl -w vm.min_free_order_shift=3;
+
+#dalvik虚拟机的Build调整
+setprop dalvik.vm.heapstartsize 8m;
+setprop dalvik.vm.heapgrowthlimit 48m;
+setprop dalvik.vm.heapsize 128m;
+
+setprop net.tcp.buffersize.hspa 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.umts 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.edge 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.gprs 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.hsdpa 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.wifi 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.evdo_b 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.lte 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.default 4096,32768,12582912,4096,32768,12582912
+
+echo "2560,5120,6912,12800,15104,17152" > /sys/module/lowmemorykiller/parameters/minfree;
+
+fi
+
+if [ "$Mode" = "512H" ]; then
+
+echo "" | tee -a $LOG_FILE
+echo "--> 内存模式：512MB内存大内存配置" | tee -a $LOG_FILE
+echo "" | tee -a $LOG_FILE
+
+#VM调整
+sysctl -w vm.dirty_background_ratio=5;
+sysctl -w vm.dirty_ratio=10;
+sysctl -w vm.dirty_expire_centisecs=500;
+sysctl -w vm.dirty_writeback_centisecs=1000;
+sysctl -w vm.min_free_kbytes=4096;
+sysctl -w vm.vfs_cache_pressure=100;
+sysctl -w vm.swappiness=60;
+sysctl -w vm.page-cluster=3;
+sysctl -w vm.min_free_order_shift=4;
+
+#dalvik虚拟机的Build调整
+setprop dalvik.vm.heapstartsize 4m;
+setprop dalvik.vm.heapgrowthlimit 32m;
+setprop dalvik.vm.heapsize 128m;
+
+setprop net.tcp.buffersize.hspa 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.umts 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.edge 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.gprs 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.hsdpa 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.wifi 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.evdo_b 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.lte 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.default 4096,32768,12582912,4096,32768,12582912
+
+echo "2560,5120,6912,12800,15104,17152" > /sys/module/lowmemorykiller/parameters/minfree;
+
+fi
+
+if [ "$Mode" = "1024B" ]; then
+
+echo "" | tee -a $LOG_FILE
+echo "--> 内存模式：1G内存推荐配置" | tee -a $LOG_FILE
+echo "" | tee -a $LOG_FILE
+
+#VM调整
+sysctl -w vm.dirty_background_ratio=10;
+sysctl -w vm.dirty_ratio=20;
+sysctl -w vm.dirty_expire_centisecs=3000;
+sysctl -w vm.dirty_writeback_centisecs=6000;
+sysctl -w vm.min_free_kbytes=4096;
+sysctl -w vm.vfs_cache_pressure=60;
+sysctl -w vm.swappiness=0;
+sysctl -w vm.page-cluster=0;
+sysctl -w vm.min_free_order_shift=3;
+
+#dalvik虚拟机的Build调整
+setprop dalvik.vm.heapstartsize 16m;
+setprop dalvik.vm.heapgrowthlimit 128m;
+setprop dalvik.vm.heapsize 192m;
+
+echo "2048,4096,8192,16384,24576,32768" > /sys/module/lowmemorykiller/parameters/minfree;
+
+setprop net.tcp.buffersize.default 6144,87380,110208,6144,16384,110208
+setprop net.tcp.buffersize.wifi 262144,524288,1048576,262144,524288,1048576
+setprop net.tcp.buffersize.lte 262144,524288,3145728,262144,524288,3145728
+setprop net.tcp.buffersize.hsdpa 6144,262144,1048576,6144,262144,1048576
+setprop net.tcp.buffersize.evdo_b 6144,262144,1048576,6144,262144,1048576
+setprop net.tcp.buffersize.umts 6144,87380,110208,6144,16384,110208
+setprop net.tcp.buffersize.hspa 6144,87380,262144,6144,16384,262144
+setprop net.tcp.buffersize.gprs 6144,8760,11680,6144,8760,11680
+setprop net.tcp.buffersize.edge 6144,26280,35040,6144,16384,35040
+
+fi
+
+if [ "$Mode" = "1024H" ]; then
+
+echo "" | tee -a $LOG_FILE
+echo "--> 内存模式：1G内存大内存配置" | tee -a $LOG_FILE
+echo "" | tee -a $LOG_FILE
+
+#VM调整
+sysctl -w vm.dirty_background_ratio=5;
+sysctl -w vm.dirty_ratio=10;
+sysctl -w vm.dirty_expire_centisecs=1000;
+sysctl -w vm.dirty_writeback_centisecs=2000;
+sysctl -w vm.min_free_kbytes=4096;
+sysctl -w vm.vfs_cache_pressure=100;
+sysctl -w vm.swappiness=0;
+sysctl -w vm.page-cluster=0;
+sysctl -w vm.min_free_order_shift=4;
+
+#dalvik虚拟机的Build调整
+setprop dalvik.vm.heapstartsize 8m;
+setprop dalvik.vm.heapgrowthlimit 100m;
+setprop dalvik.vm.heapsize 156m;
+
+setprop net.tcp.buffersize.hspa 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.umts 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.edge 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.gprs 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.hsdpa 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.wifi 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.evdo_b 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.lte 4096,32768,65536,4096,32768,65536
+setprop net.tcp.buffersize.default 4096,32768,12582912,4096,32768,12582912
+
+echo "2048,4096,8192,16384,24576,32768" > /sys/module/lowmemorykiller/parameters/minfree;
+
+fi
+
+if [ "$Mode" = "2048B" ]; then
+
+echo "" | tee -a $LOG_FILE
+echo "--> 内存模式：2G内存推荐配置" | tee -a $LOG_FILE
+echo "" | tee -a $LOG_FILE
+
+#VM调整
+sysctl -w vm.dirty_background_ratio=10;
+sysctl -w vm.dirty_ratio=20;
+sysctl -w vm.dirty_expire_centisecs=18000;
+sysctl -w vm.dirty_writeback_centisecs=18000;
+sysctl -w vm.min_free_kbytes=4096;
+sysctl -w vm.vfs_cache_pressure=20;
+sysctl -w vm.swappiness=0;
+sysctl -w vm.page-cluster=0;
+sysctl -w vm.min_free_order_shift=2;
+
+#dalvik虚拟机的Build调整
+setprop dalvik.vm.heapstartsize 24m;
+setprop dalvik.vm.heapgrowthlimit 152m;
+setprop dalvik.vm.heapsize 256m;
+
+echo "2048,4096,8192,16384,24576,32768" > /sys/module/lowmemorykiller/parameters/minfree;
+
+setprop net.tcp.buffersize.default 6144,87380,110208,6144,16384,110208
+setprop net.tcp.buffersize.wifi 262144,524288,1048576,262144,524288,1048576
+setprop net.tcp.buffersize.lte 262144,524288,3145728,262144,524288,3145728
+setprop net.tcp.buffersize.hsdpa 6144,262144,1048576,6144,262144,1048576
+setprop net.tcp.buffersize.evdo_b 6144,262144,1048576,6144,262144,1048576
+setprop net.tcp.buffersize.umts 6144,87380,110208,6144,16384,110208
+setprop net.tcp.buffersize.hspa 6144,87380,262144,6144,16384,262144
+setprop net.tcp.buffersize.gprs 6144,8760,11680,6144,8760,11680
+setprop net.tcp.buffersize.edge 6144,26280,35040,6144,16384,35040
+
+fi
+
+if [ "$Mode" = "2048H" ]; then
+
+echo "" | tee -a $LOG_FILE
+echo "--> 内存模式：2G内存大内存配置" | tee -a $LOG_FILE
+echo "" | tee -a $LOG_FILE
+
+#VM调整
+sysctl -w vm.dirty_background_ratio=10;
+sysctl -w vm.dirty_ratio=20;
+sysctl -w vm.dirty_expire_centisecs=4000;
+sysctl -w vm.dirty_writeback_centisecs=6000;
+sysctl -w vm.min_free_kbytes=4096;
+sysctl -w vm.vfs_cache_pressure=60;
+sysctl -w vm.swappiness=0;
+sysctl -w vm.page-cluster=0;
+sysctl -w vm.min_free_order_shift=4;
+
+#dalvik虚拟机的Build调整
+setprop dalvik.vm.heapstartsize 16m;
+setprop dalvik.vm.heapgrowthlimit 128m;
+setprop dalvik.vm.heapsize 256m;
+
+echo "2048,4096,8192,16384,24576,32768" > /sys/module/lowmemorykiller/parameters/minfree;
+
+setprop net.tcp.buffersize.default 6144,87380,110208,6144,16384,110208
+setprop net.tcp.buffersize.wifi 262144,524288,1048576,262144,524288,1048576
+setprop net.tcp.buffersize.lte 262144,524288,3145728,262144,524288,3145728
+setprop net.tcp.buffersize.hsdpa 6144,262144,1048576,6144,262144,1048576
+setprop net.tcp.buffersize.evdo_b 6144,262144,1048576,6144,262144,1048576
+setprop net.tcp.buffersize.umts 6144,87380,110208,6144,16384,110208
+setprop net.tcp.buffersize.hspa 6144,87380,262144,6144,16384,262144
+setprop net.tcp.buffersize.gprs 6144,8760,11680,6144,8760,11680
+setprop net.tcp.buffersize.edge 6144,26280,35040,6144,16384,35040
+fi
+
+#Dalvik VM虚拟机参数
+setprop dalvik.vm.execution-mode int:jit;
+
+echo "--> CPU、Ram模式调整完毕！" | tee -a $LOG_FILE

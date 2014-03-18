@@ -1,0 +1,315 @@
+#!/system/bin/sh
+
+############################
+# MtkTweak_V14 For MTK6577 #
+#       作者:cx9208        #
+#   吾就爱智能荣誉出品     #
+#        -CPU模式-         #
+############################
+
+############################
+#此优化脚本、软件版权属于592智能
+#允许开发者集成、修改与二次开发
+#但请注明源自吾就爱智能
+###########################
+
+
+LOG_FILE=/data/MtkTweak.log;
+Mode=`cat /system/MTCpuMode`;
+ButtomLightOF=`cat /system/MTButtomLightOF`;
+
+if [ -e $LOG_FILE ]; then
+	rm $LOG_FILE;
+fi;
+
+echo "MtkTweak优化脚本开始工作 版本：V14" | tee -a $LOG_FILE
+echo "" | tee -a $LOG_FILE
+
+###########################
+#        能耗均衡         #
+###########################
+if [ "$Mode" = "C" ]; then
+
+echo "--> 性能模式：能耗均衡" | tee -a $LOG_FILE
+
+echo "hybrid" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor;
+echo "80" > /sys/devices/system/cpu/cpufreq/hybrid/up_threshold;
+echo "60" > /sys/devices/system/cpu/cpufreq/hybrid/cpu_down_threshold;
+echo "15" > /sys/devices/system/cpu/cpufreq/hybrid/down_differential;
+echo "1" > /sys/devices/system/cpu/cpufreq/hybrid/sampling_down_factor;
+echo "300" > /sys/devices/system/cpu/cpufreq/hybrid/cpu_down_avg_times;
+echo "100" > /sys/devices/system/cpu/cpufreq/hybrid/cpu_up_bound;
+echo "0" > /sys/devices/system/cpu/cpufreq/hybrid/powersave_bias;
+
+echo "2000000" > /proc/sys/kernel/sched_min_granularity_ns;
+echo "20000000" > /proc/sys/kernel/sched_latency_ns;
+echo "2000000" > /proc/sys/kernel/sched_wakeup_granularity_ns;
+
+echo "1001000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+echo "250250" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+
+chmod 777 /sys/block/mmcblk0/queue/scheduler;
+echo "cfq" > /sys/block/mmcblk0/queue/scheduler;
+chmod 777 /sys/block/mmcblk1/queue/scheduler;
+echo "cfq" > /sys/block/mmcblk1/queue/scheduler;
+chmod 777 /sys/block/mmcblk1/queue/scheduler;
+echo "cfq" > /sys/block/mmcblk1/queue/scheduler;
+
+chmod 644 /sys/devices/system/cpu/cpu1/online;
+
+fi
+
+###########################
+#        性能优先         #
+###########################
+
+if [ "$Mode" = "F" ]; then
+
+echo "--> 性能模式：性能优先" | tee -a $LOG_FILE
+
+echo "hybrid" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor;
+echo "75" > /sys/devices/system/cpu/cpufreq/hybrid/up_threshold;
+echo "60" > /sys/devices/system/cpu/cpufreq/hybrid/cpu_down_threshold;
+echo "5" > /sys/devices/system/cpu/cpufreq/hybrid/down_differential;
+echo "1" > /sys/devices/system/cpu/cpufreq/hybrid/sampling_down_factor;
+echo "300" > /sys/devices/system/cpu/cpufreq/hybrid/cpu_down_avg_times;
+echo "150" > /sys/devices/system/cpu/cpufreq/hybrid/cpu_up_bound;
+echo "0" > /sys/devices/system/cpu/cpufreq/hybrid/powersave_bias;
+
+echo "2000000" > /proc/sys/kernel/sched_min_granularity_ns;
+echo "22000000" > /proc/sys/kernel/sched_latency_ns;
+echo "2000000" > /proc/sys/kernel/sched_wakeup_granularity_ns;
+
+echo "1001000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+echo "250250" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+
+chmod 777 /sys/block/mmcblk0/queue/scheduler;
+echo "deadline" > /sys/block/mmcblk0/queue/scheduler;
+chmod 777 /sys/block/mmcblk1/queue/scheduler;
+echo "deadline" > /sys/block/mmcblk1/queue/scheduler;
+chmod 777 /sys/block/mmcblk1/queue/scheduler;
+echo "deadline" > /sys/block/mmcblk1/queue/scheduler;
+
+chmod 644 /sys/devices/system/cpu/cpu1/online;
+chmod 644 /sys/devices/system/cpu/cpu2/online;
+chmod 644 /sys/devices/system/cpu/cpu3/online;
+
+fi
+
+###########################
+#        性能加强         #
+###########################
+
+if [ "$Mode" = "PF" ]; then
+
+echo "--> 性能模式：性能加强" | tee -a $LOG_FILE
+
+echo "hybrid" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor;
+echo "75" > /sys/devices/system/cpu/cpufreq/hybrid/up_threshold;
+echo "60" > /sys/devices/system/cpu/cpufreq/hybrid/cpu_down_threshold;
+echo "5" > /sys/devices/system/cpu/cpufreq/hybrid/down_differential;
+echo "1" > /sys/devices/system/cpu/cpufreq/hybrid/sampling_down_factor;
+echo "300" > /sys/devices/system/cpu/cpufreq/hybrid/cpu_down_avg_times;
+echo "150" > /sys/devices/system/cpu/cpufreq/hybrid/cpu_up_bound;
+echo "0" > /sys/devices/system/cpu/cpufreq/hybrid/powersave_bias;
+
+echo "2000000" > /proc/sys/kernel/sched_min_granularity_ns;
+echo "22000000" > /proc/sys/kernel/sched_latency_ns;
+echo "2000000" > /proc/sys/kernel/sched_wakeup_granularity_ns;
+
+echo "1001000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+echo "500500" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+
+chmod 777 /sys/block/mmcblk0/queue/scheduler;
+echo "deadline" > /sys/block/mmcblk0/queue/scheduler;
+chmod 777 /sys/block/mmcblk1/queue/scheduler;
+echo "deadline" > /sys/block/mmcblk1/queue/scheduler;
+chmod 777 /sys/block/mmcblk1/queue/scheduler;
+echo "deadline" > /sys/block/mmcblk1/queue/scheduler;
+
+chmod 644 /sys/devices/system/cpu/cpu1/online;
+chmod 644 /sys/devices/system/cpu/cpu2/online;
+chmod 644 /sys/devices/system/cpu/cpu3/online;
+
+fi
+
+###########################
+#        省电优先         #
+###########################
+
+if [ "$Mode" = "S" ]; then
+
+echo "--> 性能模式：省电优先" | tee -a $LOG_FILE
+
+echo "hybrid" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor;
+echo "85" > /sys/devices/system/cpu/cpufreq/hybrid/up_threshold;
+echo "65" > /sys/devices/system/cpu/cpufreq/hybrid/cpu_down_threshold;
+echo "15" > /sys/devices/system/cpu/cpufreq/hybrid/down_differential;
+echo "2" > /sys/devices/system/cpu/cpufreq/hybrid/sampling_down_factor;
+echo "300" > /sys/devices/system/cpu/cpufreq/hybrid/cpu_down_avg_times;
+echo "100" > /sys/devices/system/cpu/cpufreq/hybrid/cpu_up_bound;
+echo "0" > /sys/devices/system/cpu/cpufreq/hybrid/powersave_bias;
+
+echo "2000000" > /proc/sys/kernel/sched_min_granularity_ns;
+echo "22000000" > /proc/sys/kernel/sched_latency_ns;
+echo "2000000" > /proc/sys/kernel/sched_wakeup_granularity_ns;
+
+echo "1001000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+echo "250250" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+
+chmod 777 /sys/block/mmcblk0/queue/scheduler;
+echo "cfq" > /sys/block/mmcblk0/queue/scheduler;
+chmod 777 /sys/block/mmcblk1/queue/scheduler;
+echo "cfq" > /sys/block/mmcblk1/queue/scheduler;
+chmod 777 /sys/block/mmcblk1/queue/scheduler;
+echo "cfq" > /sys/block/mmcblk1/queue/scheduler;
+
+chmod 644 /sys/devices/system/cpu/cpu1/online;
+chmod 644 /sys/devices/system/cpu/cpu2/online;
+chmod 644 /sys/devices/system/cpu/cpu3/online;
+
+
+fi
+
+###########################
+#        应急节电         #
+###########################
+
+if [ "$Mode" = "SS" ]; then
+
+echo "--> 性能模式：应急节电" | tee -a $LOG_FILE
+
+echo "powersave" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor;
+
+echo "2000000" > /proc/sys/kernel/sched_min_granularity_ns;
+echo "22000000" > /proc/sys/kernel/sched_latency_ns;
+echo "2000000" > /proc/sys/kernel/sched_wakeup_granularity_ns;
+
+echo "250250" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+echo "250250" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+
+chmod 777 /sys/block/mmcblk0/queue/scheduler;
+echo "cfq" > /sys/block/mmcblk0/queue/scheduler;
+chmod 777 /sys/block/mmcblk1/queue/scheduler;
+echo "cfq" > /sys/block/mmcblk1/queue/scheduler;
+chmod 777 /sys/block/mmcblk1/queue/scheduler;
+echo "cfq" > /sys/block/mmcblk1/queue/scheduler;
+
+chmod 466 /sys/devices/system/cpu/cpu1/online;
+echo "0" > /sys/devices/system/cpu/cpu1/online;
+
+(
+while [ `cat /system/MTCpuMode` = "SS" ]
+do
+cat /sys/power/wait_for_fb_sleep > /dev/null
+sleep 1
+
+if [ `cat /system/MTCpuMode` = "SS" ]; then
+cat /sys/power/wait_for_fb_wake > /dev/null
+echo 0 > /sys/devices/system/cpu/cpu1/online
+echo "250250" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+echo "250250" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
+
+fi
+
+done
+) &
+
+fi
+
+###########################
+#        流畅游戏         #
+###########################
+
+if [ "$Mode" = "SF" ]; then
+
+echo "--> 性能模式：流畅游戏" | tee -a $LOG_FILE
+
+echo "performance" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor;
+
+echo "2000000" > /proc/sys/kernel/sched_min_granularity_ns;
+echo "22000000" > /proc/sys/kernel/sched_latency_ns;
+echo "2000000" > /proc/sys/kernel/sched_wakeup_granularity_ns;
+
+echo "1001000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+echo "250250" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+
+chmod 777 /sys/block/mmcblk0/queue/scheduler;
+echo "deadline" > /sys/block/mmcblk0/queue/scheduler;
+chmod 777 /sys/block/mmcblk1/queue/scheduler;
+echo "deadline" > /sys/block/mmcblk1/queue/scheduler;
+chmod 777 /sys/block/mmcblk1/queue/scheduler;
+echo "deadline" > /sys/block/mmcblk1/queue/scheduler;
+
+chmod 466 /sys/devices/system/cpu/cpu1/online;
+echo "1" > /sys/devices/system/cpu/cpu1/online;
+
+(
+while [ `cat /system/MTCpuMode` = "SF" ]
+do
+cat /sys/power/wait_for_fb_sleep > /dev/null
+sleep 1
+if [ `cat /system/MTCpuMode` = "SF" ]; then
+cat /sys/power/wait_for_fb_wake > /dev/null
+echo 1 > /sys/devices/system/cpu/cpu1/online
+echo "1001000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+fi
+done
+) &
+
+fi
+
+###########################
+#        省电加强         #
+###########################
+
+if [ "$Mode" = "PS" ]; then
+
+echo "--> 性能模式：省电加强" | tee -a $LOG_FILE
+
+echo "hybrid" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor;
+echo "90" > /sys/devices/system/cpu/cpufreq/hybrid/up_threshold;
+echo "70" > /sys/devices/system/cpu/cpufreq/hybrid/cpu_down_threshold;
+echo "15" > /sys/devices/system/cpu/cpufreq/hybrid/down_differential;
+echo "2" > /sys/devices/system/cpu/cpufreq/hybrid/sampling_down_factor;
+echo "300" > /sys/devices/system/cpu/cpufreq/hybrid/cpu_down_avg_times;
+echo "100" > /sys/devices/system/cpu/cpufreq/hybrid/cpu_up_bound;
+echo "5" > /sys/devices/system/cpu/cpufreq/hybrid/powersave_bias;
+
+echo "2000000" > /proc/sys/kernel/sched_min_granularity_ns;
+echo "22000000" > /proc/sys/kernel/sched_latency_ns;
+echo "2000000" > /proc/sys/kernel/sched_wakeup_granularity_ns;
+
+echo "750750" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+echo "250250" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+
+chmod 777 /sys/block/mmcblk0/queue/scheduler;
+echo "cfq" > /sys/block/mmcblk0/queue/scheduler;
+chmod 777 /sys/block/mmcblk1/queue/scheduler;
+echo "cfq" > /sys/block/mmcblk1/queue/scheduler;
+chmod 777 /sys/block/mmcblk1/queue/scheduler;
+echo "cfq" > /sys/block/mmcblk1/queue/scheduler;
+
+chmod 644 /sys/devices/system/cpu/cpu1/online;
+chmod 644 /sys/devices/system/cpu/cpu2/online;
+chmod 644 /sys/devices/system/cpu/cpu3/online;
+fi
+
+
+####################
+#键盘灯—_—  
+####################
+if [ "$ButtomLightOF" = "false" ]; then
+echo 0 > /sys/class/leds/button-backlight/brightness
+chmod 444 /sys/class/leds/button-backlight/brightness
+else
+chmod 644 /sys/class/leds/button-backlight/brightness
+echo 255 > /sys/class/leds/button-backlight/brightness
+echo 0 > /sys/class/leds/button-backlight/brightness
+fi
+
+############################
+#此优化脚本、软件版权属于592智能
+#允许开发者集成、修改与二次开发
+#但请注明源自吾就爱智能
+###########################
